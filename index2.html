@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise Textual Discursiva (ATD)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A aplicação foi estruturada em seções temáticas numa única página com uma barra de navegação fixa, em vez de um formato de slides. Essa abordagem permite ao usuário explorar o conteúdo de forma não-linear, seja rolando a página ou saltando diretamente para tópicos de interesse como "O Processo" ou "Aplicações". A estrutura foi desenhada para construir o conhecimento progressivamente: começando com o contexto, comparando com outras metodologias, detalhando o processo interativamente e, por fim, mostrando sua aplicação prática e princípios. Esta arquitetura melhora a usabilidade e a retenção do conhecimento ao agrupar informações relacionadas e permitir a exploração ativa. -->
+    <!-- Visualization & Content Choices: 1. Comparativo de Metodologias (Slide 3): Report Info: Tabela comparando AC, AD e ATD. Goal: Comparar. Viz/Presentation: Abas interativas. Interaction: Clicar em cada aba revela o conteúdo da metodologia correspondente. Justification: Mais focado e interativo que uma tabela estática. Library/Method: HTML/Tailwind + JS. 2. Processo da ATD (Slides 4-5): Report Info: Diagrama de fluxo e descrição das fases. Goal: Explicar o processo. Viz/Presentation: Um diagrama visual do ciclo feito com HTML/Tailwind. Interaction: Cada fase no diagrama é clicável, atualizando uma área de texto ao lado com os detalhes da fase selecionada. Justification: Conecta visualmente o ciclo ao seu significado detalhado, reforçando o aprendizado. Library/Method: HTML/Tailwind + JS. 3. Analisador de Discurso ATD (Gemini API): Report Info: Simulação do processo de análise e construção de sentido. Goal: Engajar e aplicar o conceito. Viz/Presentation: Formulário de texto e exibição de resultados em cartões. Interaction: Envio de texto para análise via Gemini API, retornando interpretação e sugestão de categorias. Justification: Recurso interativo avançado que concretiza os conceitos de "novo emergente" e "categorização emergente". Library/Method: Gemini API (gemini-2.5-flash-preview-05-20) + JS. 4. Gerador de Esboços de Pesquisa ATD (Gemini API): Report Info: Geração de perguntas e metodologias. Goal: Engajar e aplicar o conceito de forma prática. Viz/Presentation: Botões de seleção e exibição de resultados estruturados em cards. Interaction: Clique no tema para chamar o Gemini e receber uma sugestão de pesquisa. Justification: Transforma exemplos abstratos em ideias de pesquisa acionáveis. Library/Method: Gemini API (gemini-2.5-flash-preview-05-20) + JS. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        .active-tab {
+            border-color: #0891b2;
+            color: #0891b2;
+            background-color: #cffafe;
+        }
+        .active-step {
+            transform: scale(1.05);
+            box-shadow: 0 4px 14px 0 rgba(8, 145, 178, 0.25);
+            border-color: #0891b2;
+        }
+        .research-button:disabled {
+            background-color: #a5f3fc;
+            cursor: wait;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-slate-800">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="text-lg font-bold text-cyan-800">ATD</div>
+            <ul class="hidden md:flex space-x-6">
+                <li><a href="#inicio" class="text-slate-600 hover:text-cyan-700 transition-colors">Início</a></li>
+                <li><a href="#contexto" class="text-slate-600 hover:text-cyan-700 transition-colors">Contexto</a></li>
+                <li><a href="#comparativo" class="text-slate-600 hover:text-cyan-700 transition-colors">Comparativo</a></li>
+                <li><a href="#processo" class="text-slate-600 hover:text-cyan-700 transition-colors">O Processo</a></li>
+                <li><a href="#aplicacoes" class="text-slate-600 hover:text-cyan-700 transition-colors">Aplicações</a></li>
+                <li><a href="#principios" class="text-slate-600 hover:text-cyan-700 transition-colors">Princípios</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-16">
+
+        <section id="inicio" class="text-center min-h-[60vh] flex flex-col justify-center items-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-cyan-800 leading-tight">Análise Textual Discursiva (ATD)</h1>
+            <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl">Desconstruindo Discursos, Construindo Sentidos na Pesquisa Educacional Pós-Modernista.</p>
+            <div class="mt-6 text-sm text-slate-500">
+                <p><strong>Disciplina:</strong> Metodologias da Pesquisa em Educação</p>
+                <p><strong>Curso:</strong> Doutorado em Educação e Tecnologia</p>
+            </div>
+        </section>
+
+        <section id="contexto" class="py-16">
+            <h2 class="text-3xl font-bold text-center text-cyan-800 mb-2">O Ponto de Partida</h2>
+            <p class="text-center text-slate-600 mb-12 max-w-3xl mx-auto">Esta seção explora o cenário intelectual pós-moderno onde a ATD se insere. Entender este contexto é fundamental para compreender por que a ATD se afasta das metodologias tradicionais, abraçando a subjetividade e a construção discursiva da realidade como seus pilares.</p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h3 class="font-bold text-lg text-cyan-700 mb-2">Incredulidade perante as metanarrativas</h3>
+                    <p class="text-slate-600">Desconfiança de verdades universais e explicações totalizantes (Lyotard). A ATD parte do princípio de que não há uma única verdade a ser descoberta.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h3 class="font-bold text-lg text-cyan-700 mb-2">A realidade é construída pelo discurso</h3>
+                    <p class="text-slate-600">O que analisamos não é o "fato bruto", mas a linguagem que o constrói. O foco da análise está na interpretação e nos sentidos produzidos.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h3 class="font-bold text-lg text-cyan-700 mb-2">O pesquisador não é um observador neutro</h3>
+                    <p class="text-slate-600">Somos intérpretes implicados, parte do processo de construção de sentido. A subjetividade é vista como uma ferramenta, não um viés.</p>
+                </div>
+            </div>
+            <div class="mt-12 text-center bg-cyan-50 border-l-4 border-cyan-500 p-6 rounded-r-lg">
+                <p class="font-semibold text-lg text-cyan-900">Questão-chave: Como analisar a complexidade dos discursos em Educação e Tecnologia sem os aprisionar em categorias positivistas e pré-definidas?</p>
+            </div>
+        </section>
+
+        <section id="comparativo" class="py-16">
+            <h2 class="text-3xl font-bold text-center text-cyan-800 mb-2">Onde a ATD se Situa?</h2>
+            <p class="text-center text-slate-600 mb-12 max-w-3xl mx-auto">Para entender a ATD, é útil compará-la com outras abordagens de análise textual. Esta seção interativa permite que você explore as distinções fundamentais entre a Análise de Conteúdo (AC), a Análise de Discurso (AD) e a Análise Textual Discursiva (ATD), destacando seus diferentes focos, objetivos e visões de mundo.</p>
+            <div class="flex justify-center mb-8 border-b border-stone-200">
+                <button data-tab="ac" class="tab-button px-6 py-3 font-medium text-slate-600 border-b-2 border-transparent hover:bg-stone-100 transition-colors">Análise de Conteúdo (AC)</button>
+                <button data-tab="ad" class="tab-button px-6 py-3 font-medium text-slate-600 border-b-2 border-transparent hover:bg-stone-100 transition-colors">Análise de Discurso (AD)</button>
+                <button data-tab="atd" class="tab-button px-6 py-3 font-medium text-slate-600 border-b-2 border-transparent hover:bg-stone-100 transition-colors active-tab">Análise Textual Discursiva (ATD)</button>
+            </div>
+            <div id="tab-content" class="bg-white p-8 rounded-lg shadow-lg border border-stone-200 transition-all duration-300 min-h-[200px]">
+            </div>
+        </section>
+        
+        <section id="processo" class="py-16">
+            <h2 class="text-3xl font-bold text-center text-cyan-800 mb-2">O Processo da ATD: Um Caos Organizado</h2>
+            <p class="text-center text-slate-600 mb-12 max-w-3xl mx-auto">O coração da ATD é seu processo cíclico e recursivo. Diferente de um método linear, ele envolve um movimento constante de desconstrução e reconstrução de sentidos. Interaja com o diagrama abaixo para explorar cada uma das três fases fundamentais e entender como elas se conectam para gerar uma nova compreensão.</p>
+             <div class="flex flex-col md:flex-row gap-8 items-start">
+                <div class="w-full md:w-1/3 flex flex-col items-center space-y-4">
+                    <div id="step-1" class="step-card w-full text-center bg-white p-6 rounded-lg shadow-md border-2 border-transparent cursor-pointer transition-all duration-300">
+                        <span class="text-sm font-semibold text-cyan-600">Fase 1</span>
+                        <h3 class="text-xl font-bold">Unitarização</h3>
+                        <p class="text-xs text-slate-500">(Desconstrução)</p>
+                    </div>
+                    <div class="text-2xl text-cyan-500 font-light flex items-center h-8">↓ <span class="mx-2 text-sm">↑</span></div>
+                    <div id="step-2" class="step-card w-full text-center bg-white p-6 rounded-lg shadow-md border-2 border-transparent cursor-pointer transition-all duration-300">
+                        <span class="text-sm font-semibold text-cyan-600">Fase 2</span>
+                        <h3 class="text-xl font-bold">Categorização</h3>
+                         <p class="text-xs text-slate-500">(Relação e Emergência)</p>
+                    </div>
+                    <div class="text-2xl text-cyan-500 font-light flex items-center h-8">↓ <span class="mx-2 text-sm">↑</span></div>
+                    <div id="step-3" class="step-card w-full text-center bg-white p-6 rounded-lg shadow-md border-2 border-transparent cursor-pointer transition-all duration-300">
+                        <span class="text-sm font-semibold text-cyan-600">Fase 3</span>
+                        <h3 class="text-xl font-bold">Comunicação</h3>
+                         <p class="text-xs text-slate-500">(O Novo Emergente)</p>
+                    </div>
+                </div>
+                <div class="w-full md:w-2/3 bg-white p-8 rounded-lg shadow-lg border border-stone-200 min-h-[350px]">
+                    <div id="step-content"></div>
+                </div>
+            </div>
+
+            <!-- Novo Recurso LLM -->
+            <div class="mt-20 pt-10 border-t border-stone-200">
+                <h2 class="text-3xl font-bold text-center text-cyan-800 mb-4">Analisador de Discurso ATD ✨</h2>
+                <p class="text-center text-slate-600 mb-8 max-w-3xl mx-auto">Simule a fase interpretativa da ATD. Insira um fragmento de pesquisa (e.g., uma citação de um respondente) e o sistema irá sugerir uma interpretação do "Novo Emergente" e possíveis categorias para unitarização, seguindo a lógica fenomenológica e hermenêutica da metodologia.</p>
+                
+                <div class="bg-white p-6 md:p-10 rounded-xl shadow-2xl border border-stone-300 max-w-4xl mx-auto">
+                    <label for="discourseInput" class="block text-lg font-medium text-cyan-800 mb-2">Fragmento Textual para Análise:</label>
+                    <textarea id="discourseInput" rows="4" class="w-full p-3 border border-stone-300 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 text-slate-700" placeholder="Ex: 'Eu sei que a IA vai mudar tudo, mas o meu medo é que ela me torne dispensável na sala de aula. Não sei nem por onde começar a aprender.'"></textarea>
+                    
+                    <button id="analyzeButton" class="mt-4 w-full md:w-auto px-6 py-3 bg-cyan-600 text-white font-bold rounded-lg hover:bg-cyan-700 transition-colors shadow-lg shadow-cyan-200 disabled:bg-cyan-400 disabled:cursor-wait flex items-center justify-center">
+                        <span id="buttonText">Analisar Discurso ATD ✨</span>
+                        <span id="loadingIndicator" class="hidden ml-3 h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    </button>
+                    
+                    <div id="analysisOutput" class="mt-8 space-y-6">
+                        <p class="text-slate-500 italic">O resultado da análise aparecerá aqui.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="aplicacoes" class="py-16">
+            <h2 class="text-3xl font-bold text-center text-cyan-800 mb-2">Gerador de Esboços de Pesquisa ATD ✨</h2>
+            <p class="text-center text-slate-600 mb-8 max-w-3xl mx-auto">Transforme exemplos de aplicação em ideias de pesquisa acionáveis. Escolha uma área e o sistema gerará uma sugestão de Pergunta de Pesquisa e um Esboço Metodológico, detalhando a aplicação das fases da ATD.</p>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <button data-theme="Interações em AVAs" class="research-button bg-cyan-100 text-cyan-900 border border-cyan-300 p-4 rounded-lg font-semibold hover:bg-cyan-200 transition-colors">
+                        Interações em AVAs
+                    </button>
+                    <button data-theme="Narrativas Docentes sobre IA" class="research-button bg-cyan-100 text-cyan-900 border border-cyan-300 p-4 rounded-lg font-semibold hover:bg-cyan-200 transition-colors">
+                        Narrativas Docentes sobre IA
+                    </button>
+                    <button data-theme="Discursos em Políticas Públicas" class="research-button bg-cyan-100 text-cyan-900 border border-cyan-300 p-4 rounded-lg font-semibold hover:bg-cyan-200 transition-colors">
+                        Discursos em Políticas Públicas
+                    </button>
+                    <button data-theme="Produções Multimodais" class="research-button bg-cyan-100 text-cyan-900 border border-cyan-300 p-4 rounded-lg font-semibold hover:bg-cyan-200 transition-colors">
+                        Produções Multimodais
+                    </button>
+                </div>
+                
+                <div id="researchOutput" class="mt-8 bg-white p-6 rounded-xl shadow-lg border border-stone-200 min-h-[150px]">
+                    <p class="text-slate-500 italic text-center" id="researchPlaceholder">Clique em um dos temas acima para gerar um esboço de pesquisa com foco na ATD.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="principios" class="py-16">
+            <h2 class="text-3xl font-bold text-center text-cyan-800 mb-2">Uma Postura Metodológica Responsável</h2>
+            <p class="text-center text-slate-600 mb-12 max-w-3xl mx-auto">Mais do que um conjunto de técnicas, a ATD representa uma postura do pesquisador perante seu objeto de estudo. Aqui, resumimos os princípios fundamentais que guiam essa abordagem, enfatizando a subjetividade, o rigor processual e a busca pela criação de novos sentidos, culminando na essência filosófica da metodologia.</p>
+            <div class="space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h3 class="font-bold text-lg text-cyan-700 mb-2">Abraça a Subjetividade</h3>
+                    <p class="text-slate-600">A interpretação do pesquisador não é um "viés" a ser eliminado, mas a ferramenta central da análise.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h3 class="font-bold text-lg text-cyan-700 mb-2">Rigor no Processo, não no Dogma</h3>
+                    <p class="text-slate-600">O rigor não está em seguir regras fixas, mas na transparência e sistematicidade do ciclo de análise.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h3 class="font-bold text-lg text-cyan-700 mb-2">Foco na Criação de Sentido</h3>
+                    <p class="text-slate-600">O objetivo não é "provar" uma hipótese, mas produzir um conhecimento novo, uma compreensão aprofundada e original.</p>
+                </div>
+            </div>
+             <div class="mt-12 text-center bg-white border-t-4 border-cyan-600 p-8 rounded-b-lg shadow-xl">
+                <blockquote class="text-xl italic text-slate-700 leading-relaxed">
+                    "A ATD não nos convida a 'descobrir' a verdade nos dados, mas a assumir nossa responsabilidade em 'construir' um sentido possível e transformador a partir deles."
+                </blockquote>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-stone-300 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-lg font-semibold mb-2">Obrigado!</h3>
+            <p class="mb-4">Perguntas e Discussão</p>
+            <div class="text-sm text-stone-400">
+                <p><strong>Referência Principal:</strong> MORAES, R.; GALIAZZI, M. C. Análise textual discursiva. Editora Unijuí, 2011.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabsData = {
+                ac: {
+                    title: 'Análise de Conteúdo (AC)',
+                    content: [
+                        { label: 'Foco', text: 'O que o texto diz explicitamente. Foca na superfície e na frequência de termos.' },
+                        { label: 'Objetivo', text: 'Categorizar, quantificar e descrever o conteúdo manifesto.' },
+                        { label: 'Visão', text: 'Mais próxima do positivismo, buscando objetividade e descrição sistemática.' }
+                    ]
+                },
+                ad: {
+                    title: 'Análise de Discurso (AD)',
+                    content: [
+                        { label: 'Foco', text: 'As condições de produção, a ideologia e as estruturas de poder por trás do texto.' },
+                        { label: 'Objetivo', text: 'Entender o não-dito, as formações discursivas e as relações de poder.' },
+                        { label: 'Visão', text: 'Crítica e estrutural, buscando desvendar o que está implícito.' }
+                    ]
+                },
+                atd: {
+                    title: 'Análise Textual Discursiva (ATD)',
+                    content: [
+                        { label: 'Foco', text: 'A construção de compreensão a partir de uma imersão profunda no corpus.' },
+                        { label: 'Objetivo', text: 'Produzir um "novo emergente", uma nova interpretação original e articulada.' },
+                        { label: 'Visão', text: 'Fenomenológica e hermenêutica, valorizando o ciclo interpretativo.' }
+                    ]
+                }
+            };
+            
+            const stepsData = {
+                'step-1': {
+                    title: '1. Unitarização: A Desconstrução',
+                    content: [
+                        { label: 'Ato', text: 'Fragmentar o corpus textual em unidades de significado (focos de sentido).' },
+                        { label: 'Propósito', text: 'Desmontar a narrativa original para examinar seus componentes básicos, liberando os sentidos do seu contexto inicial.' }
+                    ]
+                },
+                'step-2': {
+                    title: '2. Categorização: A Criação de Novas Ordens',
+                    content: [
+                        { label: 'Ato', text: 'Comparar, agrupar e classificar unidades por semelhança temática ou estrutural.' },
+                        { label: 'Propósito', text: 'As categorias são emergentes, construídas pelo pesquisador em diálogo com os dados. É um ato de autoria e organização.' }
+                    ]
+                },
+                'step-3': {
+                    title: '3. Comunicação: A Construção do Metatexto',
+                    content: [
+                        { label: 'Ato', text: 'Produzir um novo texto, articulado e argumentativo, que expressa a nova compreensão.' },
+                        { label: 'Propósito', text: 'Não é um mero relatório de resultados, mas a expressão da nova compreensão alcançada (o "novo emergente").' }
+                    ]
+                }
+            };
+
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContent = document.getElementById('tab-content');
+
+            function updateTabContent(tabKey) {
+                const data = tabsData[tabKey];
+                let html = `<h3 class="text-2xl font-bold text-cyan-800 mb-4">${data.title}</h3><div class="space-y-3">`;
+                data.content.forEach(item => {
+                    html += `<div><strong class="font-semibold text-slate-700">${item.label}:</strong> <span class="text-slate-600">${item.text}</span></div>`;
+                });
+                html += '</div>';
+                tabContent.innerHTML = html;
+
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active-tab');
+                    if (btn.dataset.tab === tabKey) {
+                        btn.classList.add('active-tab');
+                    }
+                });
+            }
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    updateTabContent(button.dataset.tab);
+                });
+            });
+
+            updateTabContent('atd');
+
+            const stepCards = document.querySelectorAll('.step-card');
+            const stepContent = document.getElementById('step-content');
+
+            function updateStepContent(stepKey) {
+                 const data = stepsData[stepKey];
+                 if (!data) {
+                    stepContent.innerHTML = `<div class="text-center text-slate-500 p-4"><p class="font-semibold">O processo não é linear.</p><p>É um ciclo recursivo de imersão, desconstrução e reconstrução. Clique em uma fase para ver os detalhes.</p></div>`;
+                    return;
+                }
+                let html = `<h3 class="text-2xl font-bold text-cyan-800 mb-4">${data.title}</h3><div class="space-y-4">`;
+                data.content.forEach(item => {
+                    html += `<div><strong class="font-semibold text-slate-700 text-lg">${item.label}</strong> <p class="text-slate-600 mt-1">${item.text}</p></div>`;
+                });
+                html += '</div>';
+                stepContent.innerHTML = html;
+
+                stepCards.forEach(card => {
+                    card.classList.remove('active-step');
+                    if (card.id === stepKey) {
+                        card.classList.add('active-step');
+                    }
+                });
+            }
+
+            stepCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    updateStepContent(card.id);
+                });
+            });
+            
+            updateStepContent('step-1');
+
+            // --- LLM Logic Setup ---
+            const apiKey = "AIzaSyBqs7rBQG9jii416gAvri6CJneqjaH6F84"; // <--- INSIRA SUA CHAVE DE API AQUI!
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            async function exponentialBackoffFetch(url, options, maxRetries = 5, delay = 1000) {
+                for (let i = 0; i < maxRetries; i++) {
+                    try {
+                        const response = await fetch(url, options);
+                        if (response.status !== 429) {
+                            return response;
+                        }
+                        await new Promise(resolve => setTimeout(resolve, delay * (2 ** i) + Math.random() * 1000));
+                    } catch (error) {
+                        if (i === maxRetries - 1) throw error;
+                        await new Promise(resolve => setTimeout(resolve, delay * (2 ** i) + Math.random() * 1000));
+                    }
+                }
+            }
+            
+            // --- Feature 1: Analisador de Discurso ATD ---
+            const analyzeButton = document.getElementById('analyzeButton');
+            const discourseInput = document.getElementById('discourseInput');
+            const analysisOutput = document.getElementById('analysisOutput');
+            const buttonText = document.getElementById('buttonText');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+
+            async function generateATDAnalysis(discourseText) {
+                if (apiKey === "") {
+                     analysisOutput.innerHTML = `<p class="text-red-600 font-semibold">ERRO: Chave de API não configurada. Insira sua chave no código JavaScript para que o Analisador funcione.</p>`;
+                     return;
+                }
+                
+                if (!discourseText.trim()) {
+                    analysisOutput.innerHTML = `<p class="text-red-600 font-semibold">Por favor, insira um fragmento de texto para análise.</p>`;
+                    return;
+                }
+
+                analyzeButton.disabled = true;
+                buttonText.textContent = 'Analisando...';
+                loadingIndicator.classList.remove('hidden');
+                analysisOutput.innerHTML = `<div class="text-center text-cyan-700">Aguarde, Gerando o Novo Emergente...</div>`;
+
+                const systemPrompt = "Você é um especialista em Análise Textual Discursiva (ATD) com foco fenomenológico e hermenêutico. Sua tarefa é analisar um fragmento de texto de pesquisa em Educação e Tecnologia. Forneça uma análise concisa, estruturada em Markdown, em dois pontos: \n\n1. **Interpretação e Sentido (Metatexto)**: Qual o sentido ou 'novo emergente' possível a ser construído a partir deste discurso, considerando o contexto pós-modernista e a implicação do pesquisador? (Máximo 3 frases).\n\n2. **Sugestões de Unitarização/Categorização**: Sugira três categorias emergentes (em uma lista) que poderiam ser construídas a partir deste fragmento no processo de Categorização da ATD, com foco na polissemia do discurso.";
+                
+                const userQuery = `Analise o seguinte fragmento de pesquisa: "${discourseText}"`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: {
+                        parts: [{ text: systemPrompt }]
+                    },
+                };
+
+                try {
+                    const response = await exponentialBackoffFetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "Erro ao gerar a análise. Tente novamente.";
+                    
+                    const formattedText = text.replace('**Interpretação e Sentido (Metatexto)**:', '<h3 class="text-xl font-bold text-cyan-700 mb-2 mt-4">Interpretação e Sentido (Metatexto)</h3>')
+                                              .replace('**Sugestões de Unitarização/Categorização**:', '<h3 class="text-xl font-bold text-cyan-700 mb-2 mt-6 border-t pt-4">Sugestões de Unitarização/Categorização</h3>')
+                                              .replace(/\*/g, '•'); 
+
+                    analysisOutput.innerHTML = `
+                        <div class="bg-cyan-50 p-5 rounded-lg border border-cyan-200">
+                            ${formattedText}
+                        </div>
+                    `;
+
+                } catch (error) {
+                    analysisOutput.innerHTML = `<p class="text-red-600 font-semibold">Erro na comunicação com a API: ${error.message}. Verifique a sua conexão ou tente mais tarde.</p>`;
+                } finally {
+                    analyzeButton.disabled = false;
+                    buttonText.textContent = 'Analisar Discurso ATD ✨';
+                    loadingIndicator.classList.add('hidden');
+                }
+            }
+
+            analyzeButton.addEventListener('click', () => {
+                generateATDAnalysis(discourseInput.value);
+            });
+
+
+            // --- Feature 2: Gerador de Esboços de Pesquisa ---
+            const researchButtons = document.querySelectorAll('.research-button');
+            const researchOutput = document.getElementById('researchOutput');
+            const researchPlaceholder = document.getElementById('researchPlaceholder');
+            
+            async function generateResearchSketch(theme, button) {
+                if (apiKey === "") {
+                    researchOutput.innerHTML = `<p class="text-red-600 font-semibold text-center">ERRO: Chave de API não configurada. Insira sua chave no código JavaScript para que o Gerador de Esboços funcione.</p>`;
+                     return;
+                }
+
+                researchButtons.forEach(btn => btn.disabled = true);
+                const originalText = button.textContent;
+                button.textContent = 'Gerando...';
+                researchOutput.innerHTML = `<div class="text-center text-cyan-700 p-8"><span class="h-5 w-5 border-2 border-cyan-700 border-t-transparent rounded-full animate-spin inline-block mr-2"></span>Criando esboço para "${theme}"...</div>`;
+
+                const systemPrompt = "Você é um orientador de doutorado especializado em Metodologias da Pesquisa em Educação e Tecnologia, com foco em Análise Textual Discursiva (ATD). Dada a área de aplicação, crie uma sugestão de Pergunta de Pesquisa (focada em discurso/sentido) e um Esboço Metodológico (detalhando como as fases da ATD seriam aplicadas). Formate a resposta estritamente em Markdown com títulos em negrito, começando com a Pergunta de Pesquisa, seguida pelo Esboço Metodológico.";
+                
+                const userQuery = `Gere uma sugestão de Pergunta de Pesquisa e um Esboço Metodológico utilizando a ATD para o tema: "${theme}".`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: {
+                        parts: [{ text: systemPrompt }]
+                    },
+                };
+
+                try {
+                    const response = await exponentialBackoffFetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "Erro ao gerar o esboço. Tente novamente.";
+                    
+                    // Format the Markdown output for HTML display
+                    const formattedText = text.replace('**Pergunta de Pesquisa**', '<h3 class="text-xl font-bold text-cyan-700 mb-2 mt-4">Pergunta de Pesquisa</h3>')
+                                              .replace('**Esboço Metodológico (ATD)**', '<h3 class="text-xl font-bold text-cyan-700 mb-2 mt-6 border-t pt-4">Esboço Metodológico (ATD)</h3>')
+                                              .replace(/\*\*/g, '•') // Simple list bullets
+                                              .replace(/•\s/g, '• ');
+
+                    researchOutput.innerHTML = `
+                        <div class="bg-white p-2 rounded-lg">
+                            ${formattedText}
+                        </div>
+                    `;
+
+                } catch (error) {
+                    researchOutput.innerHTML = `<p class="text-red-600 font-semibold text-center">Erro na comunicação com a API: ${error.message}. Verifique a sua conexão ou tente mais tarde.</p>`;
+                } finally {
+                    researchButtons.forEach(btn => btn.disabled = false);
+                    button.textContent = originalText;
+                }
+            }
+
+            researchButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const theme = button.dataset.theme;
+                    generateResearchSketch(theme, button);
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
